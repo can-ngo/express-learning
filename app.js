@@ -1,3 +1,4 @@
+let dotenv = require('dotenv').config();
 const express = require('express')
 const app = express();
 const port = 3000
@@ -17,7 +18,19 @@ const port = 3000
 //     next();
 // })
 
-// Example 3: Time Server
+// Example 3: Environment variable, use module dotenv
+app.get('/json', (req, res)=>{
+    let response = { "message": 'Hello abcd'};
+    if (process.env.MESSAGE_STYLE === 'uppercase'){
+        response.message = response.message.toUpperCase();
+        res.json(response)
+    } else {
+        res.json(response)
+    }
+})
+
+
+// Example 4: Time Server
 app.get('/now', function middleware(req, res, next){
     req.time = new Date().toString();
     next();
@@ -27,7 +40,7 @@ app.get('/now', function middleware(req, res, next){
     }
 )
 
-// Example 4: Echo Server
+// Example 5: Echo Server
 app.get('/:word/echo', (req, res)=>{
     let word = req.params.word;
     res.json( {
@@ -35,7 +48,7 @@ app.get('/:word/echo', (req, res)=>{
     } )
 })
 
-// Example 5: Get query input from client
+// Example 6: Get query input from client
 // URL look likes: .../name?firstname=[value]&lastname=[value]
 app.get('/name', (req, res)=>{
     let firstname = req.query.firstname;
@@ -50,6 +63,6 @@ app.get('/name', (req, res)=>{
 
 
 app.listen(port, ()=> {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`\nServer is listening on port ${port}\n*\n*`)
 })
 

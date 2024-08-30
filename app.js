@@ -8,7 +8,17 @@ const port = 3000
 //     res.send("Hello Express")
 // })
 
-// Example 2: Using middleware-function to log requests at root-level
+// Example 2: console.log directory and using __dirname (absolute address)
+console.log(__dirname); // C:\Users\Can Ngo\express-learning
+
+// Example 3: send/serve file to client when server receives GET method
+// a file location must be a absolute address on server
+app.get('/', (req, res)=>{
+    res.sendFile(__dirname + '\\views\\index.html') 
+    //My file location is C:\Users\Can Ngo\express-learning\views\index.html
+})
+
+// Example 3: Using middleware-function to log requests at root-level
 // app.use(function middlewareLogger (req, res, next){
 //     res.send(`
 //         <h1>Hello from c4nng0 Server</h1>
@@ -18,7 +28,7 @@ const port = 3000
 //     next();
 // })
 
-// Example 3: Environment variable, use module dotenv
+// Example 4: Environment variable, use module dotenv
 app.get('/json', (req, res)=>{
     let response = { "message": 'Hello abcd'};
     if (process.env.MESSAGE_STYLE === 'uppercase'){
@@ -30,7 +40,7 @@ app.get('/json', (req, res)=>{
 })
 
 
-// Example 4: Time Server
+// Example 5: Time Server
 app.get('/now', function middleware(req, res, next){
     req.time = new Date().toString();
     next();
@@ -40,7 +50,7 @@ app.get('/now', function middleware(req, res, next){
     }
 )
 
-// Example 5: Echo Server
+// Example 6: Echo Server
 app.get('/:word/echo', (req, res)=>{
     let word = req.params.word;
     res.json( {
@@ -48,7 +58,7 @@ app.get('/:word/echo', (req, res)=>{
     } )
 })
 
-// Example 6: Get query input from client
+// Example 7: Get query input from client
 // URL look likes: .../name?firstname=[value]&lastname=[value]
 app.get('/name', (req, res)=>{
     let firstname = req.query.firstname;

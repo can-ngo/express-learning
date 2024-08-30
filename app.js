@@ -1,5 +1,6 @@
-let dotenv = require('dotenv').config();
-const express = require('express')
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv').config();
+const express = require('express');
 const app = express();
 const port = 3000
 
@@ -70,13 +71,22 @@ app.get('/:word/echo', (req, res)=>{
 // Example 9: Get query input from client
 // URL look likes: .../name?firstname=[value]&lastname=[value]
 app.get('/name', (req, res)=>{
-    let firstname = req.query.firstname;
-    let lastname = req.query.lastname;
     res.json({
-        name: `${firstname} ${lastname}`
+        name: `${req.query.first} ${req.query.last}`
     })
 })
 
+
+// Example 10: Use body-parser to Parse POST Requests
+app.use(bodyParser.urlencoded({extended: false}))
+
+
+// Example 11: Get Data from POST request
+app.post('/name', (req, res)=>{
+    res.json({
+        name: `${req.body.first} ${req.body.last}`
+    })
+})
 
 
 
